@@ -1,0 +1,38 @@
+function addAlertToMessageArea(severity, alertMessage) {
+    $messageArea = $('#messageArea');
+    var alertLevel = "alert-info";
+    var glyph = "glyphicon-info-sign";
+    var html;
+
+     if (severity == -2) {
+        alertLevel = "alert-danger";
+        glyph = "glyphicon-remove-sign";
+
+    }
+    else if (severity == -1) {
+        alertLevel = "alert-warning";
+        glyph = "glyphicon-exclamation-sign";
+    }
+    else if (severity == 0) {
+        alertLevel = "alert-info";
+        glyph = "glyphicon-info-sign";
+    }
+    else if (severity == 1) {
+        alertLevel = "alert-success";
+        glyph = "glyphicon-ok-sign";
+    }
+
+    var randomNumber = Math.random() * 1000000000000000;
+    var newId = "message_" + randomNumber;
+
+    html = "<div class='alert " + alertLevel + " alert-dismissible' role='alert'>";
+    html += "<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span>";
+    html += "<span class='sr-only'>Close</span></button>";
+    html += "<i class='glyphicon " + glyph + "'></i>&nbsp;";
+    html += alertMessage;
+    html += "</div>";
+
+    $messageArea.append(html);
+
+    $("#" + newId).delay(5000).addClass("in").fadeOut(1000);
+}
