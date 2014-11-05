@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1768D6
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CouncilSoft.BootstrapAlert.Tests", "CouncilSoft.BootstrapAlert.Tests\CouncilSoft.BootstrapAlert.Tests.csproj", "{71AC1C0D-A055-4AFC-B75E-2EA7E313621B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{CFC687FC-ED24-492A-A2BC-2148077DE5D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFC687FC-ED24-492A-A2BC-2148077DE5D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFC687FC-ED24-492A-A2BC-2148077DE5D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71AC1C0D-A055-4AFC-B75E-2EA7E313621B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71AC1C0D-A055-4AFC-B75E-2EA7E313621B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71AC1C0D-A055-4AFC-B75E-2EA7E313621B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71AC1C0D-A055-4AFC-B75E-2EA7E313621B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

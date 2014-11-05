@@ -13,60 +13,79 @@ namespace CouncilSoft.BootstrapAlert.Extensions
     public static class HtmlHelperExtensions
     {
         /// <summary>
-        /// Returns bootstrap alert message block.
+        /// Renders all available alerts from TempData and ViewData, and then clears the queue.
         /// </summary>
-        /// <param name="instance">The instance of MVC helper from the MVC view.</param>
-        /// <returns>The rendered HTML and JQuery to display the current alert message.</returns>
-        public static String RenderAlertMessages(this HtmlHelper instance)
+        /// <param name="instance">The instance of HtmlHelper.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <returns>Various script and HTML to render messages to the UI.</returns>
+        public static String RenderAlertMessagesFromQueue(this HtmlHelper instance)
         {
             if (instance == null)
                 throw new ArgumentNullException("instance");
 
-            TempDataDictionary tempData = instance.ViewContext.Controller.TempData;
-            if (tempData == null || tempData["alertMessage"] == null || tempData["alertType"] == null)
-                return String.Empty;
+            StringBuilder result = new StringBuilder();
+            Queue<AlertDetail> queue;
 
-            StringBuilder result = new StringBuilder();                       
+            // Handle cross-view messages (via TempData)
+            queue = instance.ViewContext.Controller.TempData["CouncilSoft.BootstrapAlerts"] as Queue<AlertDetail>;
+            result.AppendLine(ProcessQueue(queue));
+            instance.ViewContext.Controller.TempData["CouncilSoft.BootstrapAlerts"] = new Queue<AlertDetail>();
 
-            AlertSeverity severity = AlertSeverity.Info;
-            Enum.TryParse(tempData["alertType"].ToString(), true, out severity);
+            // Handle same-view messages (via ViewData)
+            queue = instance.ViewContext.Controller.ViewData["CouncilSoft.BootstrapAlerts"] as Queue<AlertDetail>;
+            result.AppendLine(ProcessQueue(queue));
+            instance.ViewContext.Controller.ViewData["CouncilSoft.BootstrapAlerts"] = new Queue<AlertDetail>();
 
-            switch (severity)
-            {
-                case AlertSeverity.Danger:
-                    result.AppendLine("<script>$().ready(function () { addAlertToMessageArea(-2, \""
-                                        + tempData["alertMessage"].ToString() + "\"); });</script>");
-                    break;
-                case AlertSeverity.Warning:
-                    result.AppendLine("<script>$().ready(function () { addAlertToMessageArea(-1, \""
-                                        + tempData["alertMessage"].ToString() + "\"); });</script>");
-                    break;
-                case AlertSeverity.Info:
-                    result.AppendLine("<script>$().ready(function () { addAlertToMessageArea(-0, \""
-                                        + tempData["alertMessage"].ToString() + "\"); });</script>");
-                    break;
-                case AlertSeverity.Success:
-                    result.AppendLine("<script>$().ready(function () { addAlertToMessageArea(1, \""
-                                        + tempData["alertMessage"].ToString() + "\"); });</script>");
-                    break;
-                default:
-                    result.AppendLine("<script>$().ready(function () { addAlertToMessageArea(0, \""
-                                        + tempData["alertMessage"].ToString() + "\"); });</script>");
-                    break;
-            }
-
-            tempData["alertType"] = null;
-            tempData["alertMessage"] = null;
             return result.ToString();
         }
 
-        public static String RenderAlertScriptResource(this HtmlHelper instance) 
+        /// <summary>
+        /// Processes a single queue and generates appropriate jQuery to show the alerts.
+        /// </summary>
+        /// <param name="queue">The queue to process, or null.</param>
+        public static String ProcessQueue(Queue<AlertDetail> queue)
         {
+            StringBuilder result = new StringBuilder();
+
+            if (queue != null)
+            {
+                while (queue.Count > 0)
+                {
+                    AlertDetail alert = queue.Dequeue();
+
+                    result.AppendLine(String.Format(
+                        @"<script>$().ready(function () {{ addAlertToMessageArea({0}, '{1}',{2},{3}); }});</script>",
+                        (Int32)alert.Severity, alert.AlertMessage, alert.AutoDismissTime.TotalMilliseconds,
+                        (alert.ShowDismissButton ? "1" : "0")));
+                }
+            }
+
+            return result.ToString();
+        }
+
+        /// <summary>
+        /// Renders the script which manages the UI alerts. Includes &lt;script&gt; tag wrapper.
+        /// </summary>
+        /// <param name="instance">The instance of HtmlHelper.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static String RenderAlertScriptResource(this HtmlHelper instance)
+        {
+            if (instance == null)
+                throw new ArgumentNullException("instance");
+
             return "<script>" + Properties.Resources.BootstrapAlert + "</script>";
         }
 
+        /// <summary>
+        /// Renders an alert message container, a div with an id of "messageArea".
+        /// </summary>
+        /// <param name="instance">The instance of HtmlHelper.</param>
+        /// <exception cref="ArgumentNullException"></exception>
         public static String RenderAlertMessageContainer(this HtmlHelper instance)
         {
+            if (instance == null)
+                throw new ArgumentNullException("instance");
+
             return "<div id=\"messageArea\"></div>";
         }
     }

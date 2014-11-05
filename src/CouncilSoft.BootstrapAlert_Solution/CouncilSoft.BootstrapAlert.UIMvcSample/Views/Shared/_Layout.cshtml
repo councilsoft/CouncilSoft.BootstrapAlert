@@ -34,11 +34,12 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-2.1.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
 
     @Html.Raw(Html.RenderAlertScriptResource())
-    @Html.Raw(Html.RenderAlertMessages())
+    @Html.Raw(Html.RenderAlertMessagesFromQueue())
+
+    @RenderSection("scripts",false)
 </body>
 </html>

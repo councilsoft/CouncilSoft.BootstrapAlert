@@ -15,31 +15,36 @@ namespace CouncilSoft.BootstrapAlert
         /// <summary>
         /// Sets the alert for the mvc view to render. Rendered by Html.RenderAlertMessages().
         /// </summary>
-        /// <param name="controllerBase"></param>
-        /// <param name="severity"></param>
-        /// <param name="alertMessage"></param>
-        public static void SetAlert(ControllerBase controllerBase, AlertSeverity severity, String alertMessage)
+        /// <param name="controllerBase">The MVC controller from which this call is being made.</param>
+        /// <param name="alert">The populated alert to show to the user.</param>
+        /// <exception cref="ArgumentNullException">If either argument is null.</exception>
+        public static void AppendAlert(ControllerBase controllerBase, AlertDetail alert)
         {
             if (controllerBase == null)
                 throw new ArgumentNullException("controllerBase");
-            if (alertMessage == null)
-                throw new ArgumentNullException("alertMessage");
+            if (alert == null)
+                throw new ArgumentNullException("alert");
 
-            controllerBase.TempData["alertType"] = (Int32)severity;
-            controllerBase.TempData["alertMessage"] = alertMessage;
-        }
+            Queue<AlertDetail> queue;
 
-        /// <summary>
-        /// Removes the alert from being displayed in the UI.
-        /// </summary>
-        /// <param name="controllerBase"></param>
-        public static void ClearAlert(ControllerBase controllerBase)
-        {
-            if (controllerBase == null)
-                throw new ArgumentNullException("controllerBase");
+            // Get the queue
+            if (alert.EnableCrossView)
+                queue = controllerBase.TempData["CouncilSoft.BootstrapAlerts"] as Queue<AlertDetail>;
+            else
+                queue = controllerBase.ViewData["CouncilSoft.BootstrapAlerts"] as Queue<AlertDetail>;
 
-            controllerBase.TempData["alertType"] = null;
-            controllerBase.TempData["alertMessage"] = null;
+            // Or create the queue
+            if (queue == null)
+                queue = new Queue<AlertDetail>();
+
+            // Enqueue the item
+            queue.Enqueue(alert);
+
+            // Persist the updated queue.
+            if (alert.EnableCrossView)
+                controllerBase.TempData["CouncilSoft.BootstrapAlerts"] = queue;
+            else
+                controllerBase.ViewData["CouncilSoft.BootstrapAlerts"] = queue;
         }
     }
 }
