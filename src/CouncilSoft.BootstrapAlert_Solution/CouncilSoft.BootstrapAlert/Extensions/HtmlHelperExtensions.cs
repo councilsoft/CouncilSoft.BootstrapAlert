@@ -64,19 +64,6 @@ namespace CouncilSoft.BootstrapAlert.Extensions
         }
 
         /// <summary>
-        /// Renders the script which manages the UI alerts. Includes &lt;script&gt; tag wrapper.
-        /// </summary>
-        /// <param name="instance">The instance of HtmlHelper.</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public static String RenderAlertScriptResource(this HtmlHelper instance)
-        {
-            if (instance == null)
-                throw new ArgumentNullException("instance");
-
-            return "<script>" + Properties.Resources.BootstrapAlert + "</script>";
-        }
-
-        /// <summary>
         /// Renders an alert message container, a div with an id of "messageArea".
         /// </summary>
         /// <param name="instance">The instance of HtmlHelper.</param>
