@@ -66,4 +66,4 @@ One other piece is needed. You have to decide where on the page you want to see 
 
     @Html.Raw(Html.RenderAlertMessageContainer())
 
-Note that this renders out a <div> tag, in which all messages will be published.
+Note that this renders out a &lt;div&gt; tag, in which all messages will be published.
