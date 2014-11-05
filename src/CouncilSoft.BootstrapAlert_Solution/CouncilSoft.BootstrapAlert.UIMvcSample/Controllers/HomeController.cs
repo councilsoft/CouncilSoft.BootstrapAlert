@@ -15,7 +15,9 @@ namespace CouncilSoft.BootstrapAlert.UIMvcSample.Controllers
                 {
                     AlertMessage = "Test DANGER message.",
                     Severity = AlertSeverity.Danger,
-                    AutoDismissTime = new TimeSpan(0, 0, 5)
+                    AutoDismissTime = new TimeSpan(0, 0, 5),
+                    ShowDismissButton = true,
+                    EnableCrossView = false
                 });
             AlertManager.AppendAlert(this,
                 new AlertDetail()

@@ -13,14 +13,14 @@
     <button id="warningButton" class="btn btn-warning"><i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;Add Warning Message</button>
     <button id="infoButton" class="btn btn-info"><i class="glyphicon glyphicon-info-sign"></i>&nbsp;Add Info Message</button>
     <button id="successButton" class="btn btn-success"><i class="glyphicon glyphicon-ok-sign"></i>&nbsp;Add Success Message</button>
-    <hr/>
+    <hr />
     <div>
         <label for="autoDismissInSeconds">Auto-dismiss in seconds:</label>
-        <input type="number" placeholder="Number of milliseconds, or 0 to disable." id="autoDismissInSeconds" value="2000" class="form-control" min="0" max="30" required/>
+        <input type="number" placeholder="Number of milliseconds, or 0 to disable." id="autoDismissInSeconds" value="2000" class="form-control" min="0" max="30" required />
     </div>
     <div>
         <label for="showCheckbox">Show dismiss button:</label>
-        <input type="checkbox" id="showCheckbox" checked="checked"/>
+        <input type="checkbox" id="showCheckbox" checked="checked" />
     </div>
 
 </fieldset>
@@ -30,26 +30,30 @@
     @using (Html.BeginForm())
     {
 
-    <button class="btn btn-primary">Submit and send message to another view</button>
+        <button class="btn btn-primary">Submit and send message to another view</button>
 
     }
 </fieldset>
 
-    @section scripts {
-        <script>
-            $().ready(function () {
-                $("#dangerButton").click(function () {
-                    addAlertToMessageArea(-2, "This is a test DANGER message.", $("#autoDismissInSeconds").val(), $("#showCheckbox").is(':checked'));
-                });
-                $("#warningButton").click(function () {
-                    addAlertToMessageArea(-1, "This is a test WARNING message.", $("#autoDismissInSeconds").val(), $("#showCheckbox").is(':checked'));
-                });
-                $("#infoButton").click(function () {
-                    addAlertToMessageArea(0, "This is a test INFO message.", $("#autoDismissInSeconds").val(), $("#showCheckbox").is(':checked'));
-                });
-                $("#successButton").click(function () {
-                    addAlertToMessageArea(1, "This is a test SUCCESS message.", $("#autoDismissInSeconds").val(), $("#showCheckbox").is(':checked'));
-                });
+@section scripts {
+    <script>
+        $().ready(function () {
+            $("#dangerButton").click(function () {
+                addAlertToMessageArea(-2, "This is a test DANGER message.",
+                    $("#autoDismissInSeconds").val(), $("#showCheckbox").is(':checked'));
             });
-        </script>
-    }
+            $("#warningButton").click(function () {
+                addAlertToMessageArea(-1, "This is a test WARNING message.",
+                    $("#autoDismissInSeconds").val(), $("#showCheckbox").is(':checked'));
+            });
+            $("#infoButton").click(function () {
+                addAlertToMessageArea(0, "This is a test INFO message.",
+                    $("#autoDismissInSeconds").val(), $("#showCheckbox").is(':checked'));
+            });
+            $("#successButton").click(function () {
+                addAlertToMessageArea(1, "This is a test SUCCESS message.",
+                    $("#autoDismissInSeconds").val(), $("#showCheckbox").is(':checked'));
+            });
+        });
+    </script>
+}

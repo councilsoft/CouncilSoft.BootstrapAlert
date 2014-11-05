@@ -37,8 +37,8 @@
     <script src="~/Scripts/jquery-2.1.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
 
-    @Html.Raw(Html.RenderAlertScriptResource())
-    @Html.Raw(Html.RenderAlertMessagesFromQueue())
+    @Html.Raw(Html.RenderAlertScriptResource()) <!-- Renders the script that manages the alerts, client-side. -->
+    @Html.Raw(Html.RenderAlertMessagesFromQueue()) <!-- Renders the alert messages that are in the queue -->
 
     @RenderSection("scripts",false)
 </body>
