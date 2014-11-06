@@ -77,3 +77,8 @@ Note that this renders out a &lt;div&gt; tag, in which all messages will be publ
 Also note that the @Html helpers require that the following language extension namespace be registered. So, at the top of your View file, add:
 
     @using CouncilSoft.BootstrapAlert.Extensions
+
+###More Samples
+See the following blog post for more detail and explaining in more-depth, how this component works:
+
+> http://blog.robseder.com/2014/11/06/using-councilsoft-bootstrapalert-nuget-package/
