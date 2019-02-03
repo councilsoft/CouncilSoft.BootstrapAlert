@@ -5,6 +5,7 @@ namespace CouncilSoft.BootstrapAlert
     /// <summary>
     /// Data structure to hold the details of an alert.
     /// </summary>
+    [Serializable]
     public class AlertDetail
     {
         /// <summary>
