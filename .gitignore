@@ -17,6 +17,9 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+bin/
+src/CouncilSoft.BootstrapAlert_Solution/CouncilSoft.BootstrapAlert/bin/
+src/CouncilSoft.BootstrapAlert_Solution/CouncilSoft.BootstrapAlert/obj/
 
 # Roslyn cache directories
 *.ide/
